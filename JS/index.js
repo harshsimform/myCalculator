@@ -1,13 +1,13 @@
-const result = document.getElementById("result").value;
-function getResult() {
-  const result = document.getElementById("result").value;
-  console.log(result);
+// const result = document.getElementById("result").value;
+// function getResult() {
+//   const result = document.getElementById("result").value;
+//   console.log(result);
 
-  const body = document.querySelector("body");
-  body.addEventListener("submit", (event) => {
-    event.preventDefault();
-  });
-}
+//   const body = document.querySelector("body");
+//   body.addEventListener("submit", (event) => {
+//     event.preventDefault();
+//   });
+// }
 
 const arr = [
   "0",
@@ -24,6 +24,7 @@ const arr = [
   "-",
   "/",
   "*",
+  "%",
   "(",
   ")",
   ".",
@@ -35,8 +36,10 @@ document.addEventListener("keydown", (event) => {
   if (arr.includes(event.key)) {
     document.getElementById("result").value += event.key;
   }
-  if (event.key == "Enter") {
-    document.getElementById("result").value = "ans";
+  if (event.key == "Enter" || event.key == "=") {
+    const result = document.getElementById("result").value;
+    document.getElementById("result").value = eval(result);
+    console.log(result);
   }
   if (event.key == "Backspace") {
     document.getElementById("result").value = document
@@ -46,7 +49,7 @@ document.addEventListener("keydown", (event) => {
 });
 
 // Get all the number buttons
-var numberButtons = document.getElementsByClassName("numbers");
+var numberButtons = document.getElementsByClassName("calcBtn");
 
 // Add a click event listener to each button
 for (var i = 0; i < numberButtons.length; i++) {
@@ -61,3 +64,11 @@ for (var i = 0; i < numberButtons.length; i++) {
     document.getElementById("result").value = result + buttonValue;
   });
 }
+
+// to get result on equal button click
+const equalBtn = document.getElementById("eval");
+equalBtn.addEventListener("click", () => {
+  const result = document.getElementById("result").value;
+  document.getElementById("result").value = eval(result);
+  console.log(result);
+});
