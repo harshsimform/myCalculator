@@ -1,13 +1,54 @@
-// const result = document.getElementById("result").value;
-// function getResult() {
-//   const result = document.getElementById("result").value;
-//   console.log(result);
+// import { evaluateExpression } from './utils/utils.js';
+import { calculate } from "./utils/utils.js";
+// let result = document.getElementById('result').value;
 
-//   const body = document.querySelector("body");
-//   body.addEventListener("submit", (event) => {
-//     event.preventDefault();
-//   });
-// }
+// (2nd) toggle button functionality
+const toggleButton = document.querySelector("#toggle-button");
+const buttons1 = document.querySelectorAll(".button1");
+const buttons2 = document.querySelectorAll(".button2");
+
+toggleButton.addEventListener("click", () => {
+  buttons1.forEach((button1) => {
+    button1.classList.toggle("hidden");
+  });
+  buttons2.forEach((button2) => {
+    button2.classList.toggle("hidden");
+  });
+});
+
+// show dropdown menu on Trigonimetry button click
+const dropbtn1 = document.getElementById("dropbtn1");
+const dropdownContent1 = document.getElementById("dropdown_content1");
+
+dropbtn1.addEventListener("click", () => {
+  dropdownContent1.style.display =
+    dropdownContent1.style.display === "none" ? "block" : "none";
+});
+
+// show dropdown menu on Function button click
+const dropbtn = document.getElementById("dropbtn");
+const dropdownContent = document.getElementById("dropdown_content");
+
+dropbtn.addEventListener("click", () => {
+  dropdownContent.style.display =
+    dropdownContent.style.display === "none" ? "block" : "none";
+});
+
+// Event listener for both dropdown, display none when user clicks outside dropdown buttons
+document.addEventListener("click", (event) => {
+  if (
+    !dropbtn.contains(event.target) &&
+    !dropdownContent.contains(event.target)
+  ) {
+    dropdownContent.style.display = "none";
+  }
+  if (
+    !dropbtn1.contains(event.target) &&
+    !dropdownContent1.contains(event.target)
+  ) {
+    dropdownContent1.style.display = "none";
+  }
+});
 
 const arr = [
   "0",
@@ -28,47 +69,70 @@ const arr = [
   "(",
   ")",
   ".",
+  "π",
+  "e",
+  "!",
 ];
 
-// display keyboard key on button click
+// display keyboard key on screen when keyboard numbers or operators click
 document.addEventListener("keydown", (event) => {
   // console.log(event);
   if (arr.includes(event.key)) {
     document.getElementById("result").value += event.key;
   }
-  if (event.key == "Enter" || event.key == "=") {
-    const result = document.getElementById("result").value;
-    document.getElementById("result").value = eval(result);
-    console.log(result);
+  if (event.key === "=") {
+    try {
+      // let result = document.getElementById('result').value;
+      // result = result?.replaceAll('π', '3.14');
+      // result = result?.replaceAll('e', '2.7182');
+      // document.getElementById('result').value = eval(result);
+      // console.log(result);
+      let result = document.getElementById("result").value;
+      calculate(result);
+      if (result === "") {
+        document.getElementById("result").value = "";
+      }
+    } catch (error) {
+      document.getElementById("result").value = "Syntax Error";
+    }
   }
-  if (event.key == "Backspace") {
+  if (event.key === "Backspace") {
     document.getElementById("result").value = document
       .getElementById("result")
       .value.slice(0, -1);
   }
+  // prevent from Enter key pressing
+  if (event.key === "Enter") {
+    event.preventDefault();
+  }
 });
 
 // Get all the number buttons
-var numberButtons = document.getElementsByClassName("calcBtn");
-
+let numberButtons = document.getElementsByClassName("calcBtn");
 // Add a click event listener to each button
-for (var i = 0; i < numberButtons.length; i++) {
+for (let i = 0; i < numberButtons.length; i++) {
   numberButtons[i].addEventListener("click", function () {
     // Get the value of the clicked button
-    var buttonValue = this.value;
+    let buttonValue = this.value;
 
     // Get the current value of the input field
-    var result = document.getElementById("result").value;
+    let result = document.getElementById("result").value;
 
     // Add the button value to the input field
     document.getElementById("result").value = result + buttonValue;
   });
 }
 
-// to get result on equal button click
+// to get result on screen when equal button pressed by user
 const equalBtn = document.getElementById("eval");
 equalBtn.addEventListener("click", () => {
-  const result = document.getElementById("result").value;
-  document.getElementById("result").value = eval(result);
-  console.log(result);
+  try {
+    let result = document.getElementById("result").value;
+    calculate(result);
+    if (result === "") {
+      document.getElementById("result").value = "";
+    }
+  } catch (error) {
+    document.getElementById("result").value = "Syntax Error";
+  }
 });
