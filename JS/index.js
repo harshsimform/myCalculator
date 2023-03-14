@@ -1,5 +1,10 @@
 // import { evaluateExpression } from './utils/utils.js';
-import { calculate } from "./utils/utils.js";
+import {
+  calculate,
+  calculateSqrt,
+  calculateCubeSqrt,
+  getAbsolute,
+} from "./utils/utils.js";
 // let result = document.getElementById('result').value;
 
 // (2nd) toggle button functionality
@@ -93,7 +98,7 @@ document.addEventListener("keydown", (event) => {
         document.getElementById("result").value = "";
       }
     } catch (error) {
-      document.getElementById("result").value = "Syntax Error";
+      document.getElementById("result").value = "Malformed Expression";
     }
   }
   if (event.key === "Backspace") {
@@ -133,6 +138,33 @@ equalBtn.addEventListener("click", () => {
       document.getElementById("result").value = "";
     }
   } catch (error) {
-    document.getElementById("result").value = "Syntax Error";
+    document.getElementById("result").value = "Malformed Expression";
   }
+});
+
+// event listener to solve two power x
+let count = 0;
+const twoPowx = document.getElementById("2_power_X");
+twoPowx.addEventListener("click", function () {
+  const userIp = document.getElementById("result").value;
+  const output = `2**${userIp}`;
+  document.getElementById("result").value = output;
+});
+
+// add Eventlistener to solve root x
+const rootXbtn = document.getElementById("root_x");
+rootXbtn.addEventListener("click", () => {
+  calculateSqrt(result);
+});
+
+// add Eventlistener to solve 3 root x
+const threeRootXbtn = document.getElementById("3_root_x");
+threeRootXbtn.addEventListener("click", () => {
+  calculateCubeSqrt(result);
+});
+
+// add Eventlistener to solve abs, |x|
+const absolutex = document.getElementById("x_abs");
+absolutex.addEventListener("click", () => {
+  getAbsolute(result);
 });
